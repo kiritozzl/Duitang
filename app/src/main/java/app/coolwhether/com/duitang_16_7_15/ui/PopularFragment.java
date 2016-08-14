@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import app.coolwhether.com.duitang_16_7_15.R;
+import app.coolwhether.com.duitang_16_7_15.adapter.TopImageAdapter;
 import butterknife.ButterKnife;
 
 /**
@@ -32,6 +33,9 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void initView(){
+        TopImageAdapter topImageAdapter = new TopImageAdapter(getActivity());
+        pagerImages.setAdapter(topImageAdapter);
+        indicator.setIndicatorCount(pagerImages);
 
     }
 

@@ -68,4 +68,9 @@ public class TopImageAdapter extends android.support.v4.view.PagerAdapter {
         title.setText(item.getTitle());
         return view;
     }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((View)object);
+    }
 }
