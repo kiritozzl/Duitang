@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.slidingTab)
-    PagerSlidingTabStrip tab;
+    PagerSlidingTabStrip tab;//cheshi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
