@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 
 import app.coolwhether.com.duitang_16_7_15.R;
@@ -20,13 +21,18 @@ public class ClumsyIndicator extends View {
     private float mSelectedRadius;
     private float mSpace;
     private Paint mPaint;
+    private static final String TAG = "ClumsyIndicator";
 
     public ClumsyIndicator(Context context) {
         super(context);
+        setSize();
+        initPaint();
     }
 
     public ClumsyIndicator(Context context, AttributeSet attrs) {
         super(context, attrs,0);
+        setSize();
+        initPaint();
     }
 
     public ClumsyIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -40,6 +46,10 @@ public class ClumsyIndicator extends View {
         mRadius = 2 * metrics.density;
         mSelectedRadius = 3 * metrics.density;
         mSpace = 12 * metrics.density;
+        Log.e(TAG, "setSize: metrics---"+metrics );
+        Log.e(TAG, "setSize: mspace---"+mSpace );
+        Log.e(TAG, "setSize: mradius---"+mRadius );
+        Log.e(TAG, "setSize: msele---"+mSelectedRadius );
     }
 
     private void initPaint(){
@@ -99,10 +109,12 @@ public class ClumsyIndicator extends View {
         float y = getHeight() / 2;
         float x = mSpace / 2;
         for (int i = 0;i < mCount;i++){
-            if (i == mSelectedItem){
-                canvas.drawCircle(x,y,mSelectedRadius,mPaint);
-            }else {
+            Log.e(TAG, "onDraw: ---"+mSelectedRadius );
+            Log.e(TAG, "onDraw: ---"+mRadius );
+            if (i != mSelectedItem){
                 canvas.drawCircle(x,y,mRadius,mPaint);
+            }else {
+                canvas.drawCircle(x,y,mSelectedRadius,mPaint);
             }
             x += mSpace;
         }

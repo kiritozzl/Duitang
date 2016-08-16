@@ -1,10 +1,13 @@
 package app.coolwhether.com.duitang_16_7_15.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -15,20 +18,23 @@ import java.util.Random;
 
 import app.coolwhether.com.duitang_16_7_15.R;
 import app.coolwhether.com.duitang_16_7_15.entity.PopularMainItem;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/8/14.
+ * Created by Administrator on 2016/8/16.
  */
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class staggerAdapter extends BaseAdapter {
     private Context mContext;
     private List<PopularMainItem> itemList;
     private boolean isReverse;
 
-    public RecycleViewAdapter(Context mContext) {
+    public staggerAdapter(Context mContext) {
         this.mContext = mContext;
+        initData();
     }
 
-    public RecycleViewAdapter(Context mContext, boolean isReverse) {
+    public staggerAdapter(Context mContext, boolean isReverse) {
         this.mContext = mContext;
         this.isReverse = isReverse;
         initData();
@@ -64,25 +70,70 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        PopularMainItem item = itemList.get(position);
-        Picasso.with(mContext).load(item.getImgId()).into(holder.dhiv);
-        holder.decr.setText(item.getImgDesci());
-        holder.star_btn.setText(item.getCollectNumber());
-        Picasso.with(mContext).load(item.getThumbImgId()).into(holder.thumb);
-        holder.name.setText(item.getUserName());
-        holder.colle.setText(item.getCollect());
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return itemList.size();
     }
 
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rcv_item,parent,false);
-        RecyclerViewHolder holder = new RecyclerViewHolder(view);
-        return holder;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        viewHolder holder;
+        if (convertView == null){
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.rcv_item,parent,false);
+            holder = new viewHolder(convertView);
+
+            /*holder.decr = ButterKnife.findById(convertView,R.id.rcv_item_descr);
+            holder.dhiv = ButterKnife.findById(convertView,R.id.rcv_item_img);
+            holder.star_btn = ButterKnife.findById(convertView,R.id.rcv_item_collbtn);
+            holder.thumb = ButterKnife.findById(convertView,R.id.rcv_item_thumb);
+            holder.name = ButterKnife.findById(convertView,R.id.rcv_item_username);
+            holder.colle = ButterKnife.findById(convertView,R.id.rcv_item_collectv);*/
+            convertView.setTag(holder);
+        }else {
+            holder = (viewHolder) convertView.getTag();
+        }
+        PopularMainItem item = itemList.get(position);
+        Picasso.with(mContext).load(item.getImgId()).into(holder.dhiv);
+        holder.decr.setText(item.getImgDesci());
+        //int转为String，否则出错
+        holder.star_btn.setText(item.getCollectNumber() + "");
+        
+        Picasso.with(mContext).load(item.getThumbImgId()).into(holder.thumb);
+        holder.name.setText(item.getUserName());
+        holder.colle.setText("收集到 " + item.getCollect());
+        return convertView;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return itemList.get(position);
+    }
+
+    static class viewHolder{
+        @BindView(R.id.rcv_item_img)
+        DynamicHeightImageView dhiv;
+
+        @BindView(R.id.rcv_item_descr)
+        TextView decr;
+
+        @BindView(R.id.rcv_item_collbtn)
+        Button star_btn;
+
+        @BindView(R.id.rcv_item_thumb)
+        ImageView thumb;
+
+        @BindView(R.id.rcv_item_username)
+        TextView name;
+
+        @BindView(R.id.rcv_item_collectv)
+        TextView colle;
+
+        public viewHolder(View view) {
+            ButterKnife.bind(this,view);
+        }
     }
 }

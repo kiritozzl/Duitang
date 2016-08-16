@@ -3,6 +3,10 @@ package app.coolwhether.com.duitang_16_7_15.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import app.coolwhether.com.duitang_16_7_15.ui.DiscoverFragment;
+import app.coolwhether.com.duitang_16_7_15.ui.ErrorFragment;
+import app.coolwhether.com.duitang_16_7_15.ui.HotFragment;
+import app.coolwhether.com.duitang_16_7_15.ui.NewsFragment;
 import app.coolwhether.com.duitang_16_7_15.ui.PopularFragment;
 
 /**
@@ -20,8 +24,15 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 return new PopularFragment();
+            case 1:
+                return new DiscoverFragment();
+            case 2:
+                return new HotFragment();
+            case 3:
+                return new NewsFragment();
+            default:
+                return ErrorFragment.newInstance(position + "");
         }
-        return null;
     }
 
     @Override

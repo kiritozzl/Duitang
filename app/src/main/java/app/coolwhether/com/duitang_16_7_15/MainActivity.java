@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -25,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.slidingTab)
-    PagerSlidingTabStrip tab;//cheshi
+    PagerSlidingTabStrip tab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager
-        .LayoutParams.FLAG_FULLSCREEN);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager
+//        .LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -40,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(4);
         //当继承AppCompatActivity时才能使用getSupportFragmentManager()
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        tab.setViewPager(viewPager);
     }
 
     private void setActionBar(){
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.user_default_face);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("用户");
+        actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(new CircleImageDrawable(bitmap));
         actionBar.setHomeButtonEnabled(true);
         setOverflowShowingAlways();

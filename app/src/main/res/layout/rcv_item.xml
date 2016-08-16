@@ -10,7 +10,7 @@
             android:layout_height="match_parent"/>
 
         <TextView
-            android:id="@+id/rev_item_descr"
+            android:id="@+id/rcv_item_descr"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_margin="5dp"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v4.widget.CircleImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/rcv_item_thumb"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
@@ -54,8 +54,6 @@
             android:id="@+id/rcv_item_collectv"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp"
             android:layout_toRightOf="@id/rcv_item_thumb"
             android:layout_below="@id/rcv_item_username"
             android:layout_width="wrap_content"

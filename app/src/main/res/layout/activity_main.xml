@@ -14,7 +14,10 @@
         android:layout_height="48dp"
         android:background="#FFF5F5F5"
         android:textSize="16sp"
-        app:pstsIndicatorColor="#FFF5F5F5"
+        app:pstsShouldExpand="true"
+        android:textColor="@drawable/selector_indicator_text_color"
+        app:pstsIndicatorColor="#1019bf"
+        app:pstsDividerColor="#f5b623"
         />
 
     <android.support.v4.view.ViewPager
