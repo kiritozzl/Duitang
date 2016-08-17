@@ -51,12 +51,38 @@ public class PopularFragment extends Fragment implements SwipeRefreshLayout.OnRe
         TopImageAdapter topImageAdapter = new TopImageAdapter(getActivity());
         pagerImages.setAdapter(topImageAdapter);
         indicator.setIndicatorCount(pagerImages);
-
         staggerAdapter adapter = new staggerAdapter(getActivity(),false);
         staggeredGridView.setAdapter(adapter);
 
         sr_layout.setOnRefreshListener(this);//需在主activity，implements SwipeRefreshLayout.OnRefreshListener
         sr_layout.setColorSchemeColors(R.color.red);//设置加载时的颜色显示
+
+        pagerImages.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            boolean isHandle = false;
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (!isHandle && positionOffsetPixels > 0){
+                    sr_layout.setEnabled(false);
+                    isHandle = true;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                indicator.setmSelectedItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                switch (state){
+                    case ViewPager.SCROLL_STATE_IDLE:
+                        sr_layout.setEnabled(true);
+                        isHandle = false;
+                        break;
+                }
+            }
+        });
     }
 
     @Override

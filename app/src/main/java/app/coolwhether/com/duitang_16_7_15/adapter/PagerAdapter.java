@@ -14,7 +14,7 @@ import app.coolwhether.com.duitang_16_7_15.ui.PopularFragment;
  */
 public class PagerAdapter extends FragmentPagerAdapter {
     private String []title = {"热门","发现","动态","消息"};
-
+    //test
     public PagerAdapter(android.support.v4.app.FragmentManager fm) {
         super(fm);
     }

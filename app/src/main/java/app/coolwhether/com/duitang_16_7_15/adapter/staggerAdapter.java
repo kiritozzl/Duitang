@@ -18,6 +18,7 @@ import java.util.Random;
 
 import app.coolwhether.com.duitang_16_7_15.R;
 import app.coolwhether.com.duitang_16_7_15.entity.PopularMainItem;
+import app.coolwhether.com.duitang_16_7_15.support.BitmapUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,7 +29,7 @@ public class staggerAdapter extends BaseAdapter {
     private Context mContext;
     private List<PopularMainItem> itemList;
     private boolean isReverse;
-
+    private static final String TAG = "staggerAdapter";
     public staggerAdapter(Context mContext) {
         this.mContext = mContext;
         initData();
@@ -92,11 +93,12 @@ public class staggerAdapter extends BaseAdapter {
             holder = (viewHolder) convertView.getTag();
         }
         PopularMainItem item = itemList.get(position);
+        holder.dhiv.setmRatio(BitmapUtils.getRatios(mContext,item.getImgId()));
+        //Log.e(TAG, "getView: ratios---"+ BitmapUtils.getRatios(mContext,item.getImgId()));
         Picasso.with(mContext).load(item.getImgId()).into(holder.dhiv);
         holder.decr.setText(item.getImgDesci());
         //int转为String，否则出错
         holder.star_btn.setText(item.getCollectNumber() + "");
-        
         Picasso.with(mContext).load(item.getThumbImgId()).into(holder.thumb);
         holder.name.setText(item.getUserName());
         holder.colle.setText("收集到 " + item.getCollect());

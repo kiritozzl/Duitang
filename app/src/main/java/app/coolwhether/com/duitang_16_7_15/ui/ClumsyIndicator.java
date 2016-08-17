@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 
 import app.coolwhether.com.duitang_16_7_15.R;
@@ -16,7 +15,7 @@ import app.coolwhether.com.duitang_16_7_15.R;
  */
 public class ClumsyIndicator extends View {
     private int mCount;
-    private int mSelectedItem;
+    private int mSelectedItem = 0;
     private float mRadius;
     private float mSelectedRadius;
     private float mSpace;
@@ -24,15 +23,13 @@ public class ClumsyIndicator extends View {
     private static final String TAG = "ClumsyIndicator";
 
     public ClumsyIndicator(Context context) {
-        super(context);
-        setSize();
-        initPaint();
+        //调用下面两个参数的构造函数
+        this(context,null);
     }
 
     public ClumsyIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs,0);
-        setSize();
-        initPaint();
+        //调用下面三个参数的构造函数
+        this(context, attrs,0);
     }
 
     public ClumsyIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -46,20 +43,17 @@ public class ClumsyIndicator extends View {
         mRadius = 2 * metrics.density;
         mSelectedRadius = 3 * metrics.density;
         mSpace = 12 * metrics.density;
-        Log.e(TAG, "setSize: metrics---"+metrics );
-        Log.e(TAG, "setSize: mspace---"+mSpace );
-        Log.e(TAG, "setSize: mradius---"+mRadius );
-        Log.e(TAG, "setSize: msele---"+mSelectedRadius );
     }
 
     private void initPaint(){
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(getResources().getColor(R.color.light_grey));
+        mPaint.setColor(getResources().getColor(R.color.white));
         mPaint.setStyle(Paint.Style.FILL);
     }
 
     public void setIndicatorCount(ViewPager viewPager){
         mCount = viewPager.getAdapter().getCount();
+        //Log.e(TAG, "setIndicatorCount: mCount---"+mCount );
         invalidate();
     }
 
@@ -70,7 +64,8 @@ public class ClumsyIndicator extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(MeasureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+        //是setMeasuredDimension，不是从父类继承的方法
+        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
     }
 
     private int measureHeight(int heightMeasureSpec){
@@ -88,14 +83,14 @@ public class ClumsyIndicator extends View {
         return result;
     }
 
-    private int MeasureWidth(int widthMeasureSpec){
+    private int measureWidth(int widthMeasureSpec){
         int specMode = MeasureSpec.getMode(widthMeasureSpec);
         int specSize = MeasureSpec.getSize(widthMeasureSpec);
         int result;
         if (specMode != MeasureSpec.EXACTLY){
             result = getPaddingLeft() + getPaddingRight() + (int)(mSpace * mCount);
             if (specMode == MeasureSpec.AT_MOST){
-                result = specSize;
+                result = Math.min(result,specSize);
             }
         }else {
             result = specSize;
@@ -109,8 +104,6 @@ public class ClumsyIndicator extends View {
         float y = getHeight() / 2;
         float x = mSpace / 2;
         for (int i = 0;i < mCount;i++){
-            Log.e(TAG, "onDraw: ---"+mSelectedRadius );
-            Log.e(TAG, "onDraw: ---"+mRadius );
             if (i != mSelectedItem){
                 canvas.drawCircle(x,y,mRadius,mPaint);
             }else {

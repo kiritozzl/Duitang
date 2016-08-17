@@ -22,9 +22,9 @@ public class DynamicHeightImageView extends ImageView {
         return mRatio;
     }
 
-    public void setmRatio(double mRatio) {
-        if (mRatio != this.mRatio){
-            this.mRatio = mRatio;
+    public void setmRatio(double Ratio) {
+        if (Ratio != this.mRatio){
+            this.mRatio = Ratio;
             requestLayout();
         }
     }
