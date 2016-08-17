@@ -15,6 +15,7 @@ import java.util.Random;
 
 import app.coolwhether.com.duitang_16_7_15.R;
 import app.coolwhether.com.duitang_16_7_15.entity.PopularMainItem;
+import app.coolwhether.com.duitang_16_7_15.support.BitmapUtils;
 
 /**
  * Created by Administrator on 2016/8/14.
@@ -23,6 +24,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
     private Context mContext;
     private List<PopularMainItem> itemList;
     private boolean isReverse;
+    private static final String TAG = "RecycleViewAdapter";
 
     public RecycleViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -66,12 +68,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         PopularMainItem item = itemList.get(position);
+        holder.dhiv.setmRatio(BitmapUtils.getRatios(mContext,item.getImgId()));
         Picasso.with(mContext).load(item.getImgId()).into(holder.dhiv);
         holder.decr.setText(item.getImgDesci());
-        holder.star_btn.setText(item.getCollectNumber());
+        //int转为String，否则出错
+        holder.star_btn.setText(item.getCollectNumber() + "");
         Picasso.with(mContext).load(item.getThumbImgId()).into(holder.thumb);
         holder.name.setText(item.getUserName());
-        holder.colle.setText(item.getCollect());
+        holder.colle.setText("收集到 " + item.getCollect());
     }
 
     @Override
