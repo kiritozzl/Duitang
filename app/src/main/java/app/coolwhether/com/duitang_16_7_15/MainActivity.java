@@ -1,11 +1,13 @@
 package app.coolwhether.com.duitang_16_7_15;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
@@ -16,6 +18,7 @@ import java.lang.reflect.Field;
 
 import app.coolwhether.com.duitang_16_7_15.adapter.PagerAdapter;
 import app.coolwhether.com.duitang_16_7_15.ui.CircleImageDrawable;
+import app.coolwhether.com.duitang_16_7_15.ui.UserActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -24,13 +27,11 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.slidingTab)
     PagerSlidingTabStrip tab;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager
-//        .LayoutParams.FLAG_FULLSCREEN);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -71,8 +72,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.home:
-
+            case android.R.id.home:
+                Log.e(TAG, "onOptionsItemSelected: -----test");
+                Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
