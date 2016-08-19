@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.slidingTab)
     PagerSlidingTabStrip tab;
     private static final String TAG = "MainActivity";
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +39,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        setActionBar();
+        //setActionBar();
+        setToolBar();
+
         viewPager.setOffscreenPageLimit(4);
         //当继承AppCompatActivity时才能使用getSupportFragmentManager()
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         tab.setViewPager(viewPager);
+    }
+
+    private void setToolBar(){
+        setSupportActionBar(toolbar);
+        //toolbar.setTitle("用户");不起作用！
+        getSupportActionBar().setTitle("用户");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.user_default_face);
+        toolbar.setNavigationIcon(new CircleImageDrawable(bitmap));
+        //给NavigationIcon添加点击事件
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                startActivity(intent);
+            }
+        });
+        setOverflowShowingAlways();
     }
 
     private void setActionBar(){
@@ -69,13 +93,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 Log.e(TAG, "onOptionsItemSelected: -----test");
                 Intent intent = new Intent(MainActivity.this, UserActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

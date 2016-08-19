@@ -8,6 +8,12 @@
     android:orientation="vertical"
     tools:context="app.coolwhether.com.duitang_16_7_15.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"/>
+
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/slidingTab"
         android:layout_width="match_parent"
